@@ -69,5 +69,18 @@ enum ResponseStatus {
   Unauthorized = 401,
   Conflict = 409,
 }
+type currentPrice = {
+  [key: string]: {
+    yes: number;
+    no: number;
+  };
+};
 
-export { balance, orderBook, stockBalance, StockDetails, ResponseStatus };
+export {
+  balance,
+  orderBook,
+  stockBalance,
+  StockDetails,
+  ResponseStatus,
+  currentPrice,
+};

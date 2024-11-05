@@ -12,7 +12,11 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.1",
+    "node-cron": "^3.0.3",
     "redis": "^4.7.0",
     "tsc-watch": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^3.0.11"
   }
 }

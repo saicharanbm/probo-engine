@@ -1,4 +1,10 @@
-import { balance, orderBook, stockBalance, StockDetails } from "../utils/types";
+import {
+  balance,
+  currentPrice,
+  orderBook,
+  stockBalance,
+  StockDetails,
+} from "../utils/types";
 
 const INR_BALANCES: balance = {
   user1: {
@@ -89,6 +95,13 @@ const STOCK_DETAILS: StockDetails = {
 };
 const ADMIN_Balance: Record<string, number> = {
   balance: 4000,
+};
+
+const currentPrice: currentPrice = {
+  BTC_USDT_10_Oct_2024_9_30: {
+    yes: 950,
+    no: 500,
+  },
 };
 
 export {

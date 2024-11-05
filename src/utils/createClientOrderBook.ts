@@ -26,47 +26,35 @@ const createClientOrderBook = (data: {
     };
   };
 }) => {
-  const clientOrderBook = JSON.parse(JSON.stringify(data));
-  let yesStocks: number[] = [];
-  let noStocks: number[] = [];
+  // Helper function to process each side (yes/no)
+  const processEntries = (entries: {
+    [key: number]: { total: number; orders?: any };
+  }) => {
+    // Create array of [price, total] pairs
+    const priceEntries = Object.entries(entries).map(([price, data]) => ({
+      price: parseInt(price),
+      total: data.total,
+    }));
+    console.log("Before", priceEntries);
 
-  // Populate yesStocks array and remove 'orders' from yes items
-  Object.keys(clientOrderBook.yes).forEach((key) => {
-    delete clientOrderBook.yes[key].orders;
-    yesStocks.push(clientOrderBook.yes[key].total);
-  });
+    // Sort by total in descending order
+    priceEntries.sort((a, b) => b.total - a.total);
+    console.log("After", priceEntries);
+    // Take top 5 entries
+    const topEntries = priceEntries.slice(0, 5);
+    console.log("Sliced", topEntries);
+    return topEntries;
+    // Convert back to required format
+    // return topEntries.reduce((acc, { price, total }) => {
+    //   acc[price] = { total };
+    //   return acc;
+    // }, {} as { [key: number]: { total: number } });
+  };
 
-  // Populate noStocks array and remove 'orders' from no items
-  Object.keys(clientOrderBook.no).forEach((key) => {
-    delete clientOrderBook.no[key].orders;
-    noStocks.push(clientOrderBook.no[key].total);
-  });
-
-  // Sort the stocks arrays in ascending order
-  yesStocks.sort((a, b) => a - b);
-  noStocks.sort((a, b) => a - b);
-
-  // Keep only the top 5 totals for yes
-  if (yesStocks.length > 5) {
-    yesStocks = yesStocks.slice(0, 5);
-    Object.keys(clientOrderBook.yes).forEach((key) => {
-      if (!yesStocks.includes(clientOrderBook.yes[key].total)) {
-        delete clientOrderBook.yes[key];
-      }
-    });
-  }
-
-  // Keep only the top 5 totals for no
-  if (noStocks.length > 5) {
-    noStocks = noStocks.slice(0, 5);
-    Object.keys(clientOrderBook.no).forEach((key) => {
-      if (!noStocks.includes(clientOrderBook.no[key].total)) {
-        delete clientOrderBook.no[key];
-      }
-    });
-  }
-
-  return clientOrderBook;
+  return {
+    yes: processEntries(data.yes),
+    no: processEntries(data.no),
+  };
 };
 
 export { createClientOrderBook };

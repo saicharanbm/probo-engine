@@ -18,8 +18,7 @@ const buyStock = (
   let requiredStocks = quantity;
   const oppositeStockPrice = 1000 - price;
 
-  // Step 1: Check if the required quantity of stocks is present in the order book and assign
-  // whatever is available to the user.
+  // Step 1: Check if the required quantity of stocks is present in the order book and assign the available stocks to the user to the user.
   if (ORDERBOOK[stockSymbol]?.[userStock]?.[price]) {
     while (ORDERBOOK[stockSymbol][userStock][price] && requiredStocks > 0) {
       // Check if there are "request" orders for matching

@@ -1,5 +1,6 @@
 import { INR_BALANCES, ORDERBOOK, STOCK_DETAILS } from "../data/data";
 import { ResponseStatus } from "./types";
+import { createSchedule } from "./createSchedule";
 export const createStockSymbol = (
   stockSymbol: string,
   userId: string,
@@ -39,7 +40,7 @@ export const createStockSymbol = (
 
     isActive: true,
   };
-  //   createSchedule(endTime, stockSymbol);
+  createSchedule(endTime, stockSymbol);
   return JSON.stringify({
     statusCode: ResponseStatus.Success,
     response: { message: "Stock symbol created successfully." },
